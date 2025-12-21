@@ -22,8 +22,7 @@ export function ChatMessage({ role, content, timestamp }: ChatMessageProps) {
     <div className={`flex gap-3 ${isUser ? 'justify-end' : 'justify-start'}`}>
       {!isUser && (
         <Avatar className="h-8 w-8 flex-shrink-0">
-          <AvatarImage src="/api/avatar/assistant" alt="Assistant" />
-          <AvatarFallback className="bg-blue-600 text-white">AI</AvatarFallback>
+          <AvatarFallback className="bg-blue-600 text-white">🤖</AvatarFallback>
         </Avatar>
       )}
 
@@ -53,9 +52,8 @@ export function ChatMessage({ role, content, timestamp }: ChatMessageProps) {
 
       {isUser && (
         <Avatar className="h-8 w-8 flex-shrink-0">
-          <AvatarImage src="/api/avatar/user" alt="You" />
           <AvatarFallback className="bg-slate-600 text-white">
-            YOU
+            👤
           </AvatarFallback>
         </Avatar>
       )}

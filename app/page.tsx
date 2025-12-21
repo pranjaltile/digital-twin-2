@@ -1,152 +1,85 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
-import Link from 'next/link';
+import { MessageSquare, Mic, ArrowRight } from 'lucide-react';
 
 export default function Home() {
-  const [dbConnected, setDbConnected] = useState<boolean | null>(null);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    // Test database connection on page load
-    async function checkDb() {
-      try {
-        const response = await fetch('/api/test-db');
-        const data = await response.json();
-        setDbConnected(data.connected);
-      } catch (error) {
-        console.error('Error checking database:', error);
-        setDbConnected(false);
-      } finally {
-        setLoading(false);
-      }
-    }
-
-    checkDb();
-  }, []);
-
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900">
-      <div className="flex min-h-screen flex-col items-center justify-center px-4 py-16 sm:px-6 lg:px-8">
-        <div className="w-full max-w-2xl space-y-8 text-center">
-          {/* Header */}
-          <div className="space-y-4">
-            <h1 className="text-5xl font-bold text-white">Digital Twin</h1>
-            <p className="text-xl text-slate-300">
-              Your AI-powered professional presence. Available 24/7.
-            </p>
+    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 flex flex-col">
+      {/* Hero Section */}
+      <main className="flex-1 flex items-center justify-center px-4 py-12">
+        <div className="text-center max-w-3xl">
+          {/* Logo/Avatar */}
+          <div className="mb-8">
+            <div className="w-24 h-24 mx-auto rounded-full bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center text-4xl shadow-2xl">
+              🤖
+            </div>
           </div>
 
-          {/* Status Card */}
-          <Card className="border-slate-700 bg-slate-800/50 p-6">
-            <div className="space-y-4">
-              <h2 className="text-lg font-semibold text-white">System Status</h2>
+          {/* Headline */}
+          <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">
+            Pranjal's <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-400">Digital Twin</span>
+          </h1>
+          
+          <p className="text-xl text-slate-400 mb-8 max-w-xl mx-auto">
+            An AI-powered professional presence. Chat or talk with me about my skills, projects, and availability.
+          </p>
 
-              {/* Database Status */}
-              <div className="flex items-center justify-between rounded-lg bg-slate-900/50 p-4">
-                <div className="flex items-center gap-3">
-                  <div
-                    className={`h-3 w-3 rounded-full ${
-                      dbConnected ? 'bg-green-500' : 'bg-red-500'
-                    }`}
-                  />
-                  <span className="text-slate-200">Database Connection</span>
-                </div>
-                <span className="text-sm font-medium">
-                  {loading ? (
-                    <span className="text-slate-400">Checking...</span>
-                  ) : dbConnected ? (
-                    <span className="text-green-400">Connected ✓</span>
-                  ) : (
-                    <span className="text-red-400">Disconnected ✗</span>
-                  )}
-                </span>
-              </div>
+          {/* CTA Button */}
+          <Link href="/chat" className="inline-block">
+            <Button size="lg" className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-lg px-8 py-6">
+              <MessageSquare className="mr-2 h-5 w-5" />
+              Start Conversation
+              <ArrowRight className="ml-2 h-5 w-5" />
+            </Button>
+          </Link>
 
-              {/* Next.js Status */}
-              <div className="flex items-center justify-between rounded-lg bg-slate-900/50 p-4">
-                <div className="flex items-center gap-3">
-                  <div className="h-3 w-3 rounded-full bg-green-500" />
-                  <span className="text-slate-200">Frontend (Next.js 16)</span>
-                </div>
-                <span className="text-sm font-medium text-green-400">
-                  Running ✓
-                </span>
-              </div>
-
-              {/* AI SDK Status */}
-              <div className="flex items-center justify-between rounded-lg bg-slate-900/50 p-4">
-                <div className="flex items-center gap-3">
-                  <div className="h-3 w-3 rounded-full bg-green-500" />
-                  <span className="text-slate-200">AI SDK (Vercel AI v6)</span>
-                </div>
-                <span className="text-sm font-medium text-green-400">
-                  Ready ✓
-                </span>
+          {/* Features */}
+          <div className="mt-12 grid md:grid-cols-2 gap-4 max-w-md mx-auto">
+            <div className="flex items-center gap-3 p-4 bg-slate-800/50 rounded-lg border border-slate-700">
+              <MessageSquare className="h-6 w-6 text-blue-400" />
+              <div className="text-left">
+                <p className="font-medium text-white">Text Chat</p>
+                <p className="text-xs text-slate-400">Type your questions</p>
               </div>
             </div>
-          </Card>
-
-          {/* Features Overview */}
-          <div className="grid gap-4 sm:grid-cols-3">
-            <Card className="border-slate-700 bg-slate-800/50 p-4">
-              <div className="text-center">
-                <div className="mb-2 text-2xl">💬</div>
-                <h3 className="font-semibold text-white">Chat Interface</h3>
-                <p className="text-xs text-slate-400">Real-time conversations</p>
+            <div className="flex items-center gap-3 p-4 bg-slate-800/50 rounded-lg border border-slate-700">
+              <Mic className="h-6 w-6 text-purple-400" />
+              <div className="text-left">
+                <p className="font-medium text-white">Voice Mode</p>
+                <p className="text-xs text-slate-400">Toggle in chat</p>
               </div>
-            </Card>
-
-            <Card className="border-slate-700 bg-slate-800/50 p-4">
-              <div className="text-center">
-                <div className="mb-2 text-2xl">🤖</div>
-                <h3 className="font-semibold text-white">AI Agent</h3>
-                <p className="text-xs text-slate-400">Claude Sonnet 4.5</p>
-              </div>
-            </Card>
-
-            <Card className="border-slate-700 bg-slate-800/50 p-4">
-              <div className="text-center">
-                <div className="mb-2 text-2xl">💾</div>
-                <h3 className="font-semibold text-white">Database</h3>
-                <p className="text-xs text-slate-400">Neon Postgres</p>
-              </div>
-            </Card>
+            </div>
           </div>
 
-          {/* CTA Buttons */}
-          <div className="flex flex-col gap-4 sm:flex-row sm:justify-center">
-            <Link href="/chat" className="w-full sm:w-auto">
-              <Button
-                size="lg"
-                className="w-full bg-blue-600 hover:bg-blue-700"
+          {/* Quick Links */}
+          <div className="mt-12 flex flex-wrap justify-center gap-4 text-sm">
+            <span className="text-slate-500">Quick questions:</span>
+            {[
+              "What are your skills?",
+              "Tell me about your projects",
+              "Are you available?",
+            ].map((q, i) => (
+              <Link 
+                key={i}
+                href={`/chat?q=${encodeURIComponent(q)}`}
+                className="text-slate-400 hover:text-blue-400 transition-colors"
               >
-                Start Chatting →
-              </Button>
-            </Link>
-
-            <Button
-              variant="outline"
-              size="lg"
-              className="w-full border-slate-600 text-slate-300 hover:border-slate-500 hover:bg-slate-800 sm:w-auto"
-              onClick={() => window.open('/api/test-db', '_blank')}
-            >
-              Check DB Status
-            </Button>
-          </div>
-
-          {/* Footer Info */}
-          <div className="border-t border-slate-700 pt-8 text-sm text-slate-400">
-            <p>
-              Milestone 1: Foundation Complete ✓
-              <br />
-              Ready for Milestone 2: Chat Interface & Agent Wiring
-            </p>
+                {q}
+              </Link>
+            ))}
           </div>
         </div>
-      </div>
+      </main>
+
+      {/* Footer */}
+      <footer className="border-t border-slate-800 py-6 px-4">
+        <div className="max-w-3xl mx-auto text-center text-sm text-slate-500">
+          <p>Built with Next.js, Groq AI, and ❤️</p>
+        </div>
+      </footer>
     </div>
   );
 }
