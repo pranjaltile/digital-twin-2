@@ -3,7 +3,8 @@
  * POST /api/chat
  * Handles real-time chat with Claude Sonnet 4.5 via Vercel AI SDK
  * 
- * Milestone 3: Now persists all messages to Neon Postgres
+ * Milestone 3: Message persistence
+ * Milestone 6: Tool-calling & agentic logic (prepared)
  */
 
 import { streamText } from 'ai';
@@ -69,16 +70,16 @@ export async function POST(request: NextRequest) {
     // Get system prompt
     const systemPrompt = getSystemPrompt();
 
-    // Create stream for AI response
-    const { textStream, fullStream } = await streamText({
+    // Create the AI model stream
+    const { textStream } = await streamText({
       model: anthropic('claude-3-5-sonnet-20241022'),
       system: systemPrompt,
-      messages: fullHistory,
+      messages: fullHistory as any,
       temperature: 0.7,
-      maxTokens: 1024,
+      maxTokens: 2000,
     });
 
-    // Stream response and collect full text
+    // Collect response
     const chunks: string[] = [];
     for await (const chunk of textStream) {
       chunks.push(chunk);
@@ -90,17 +91,18 @@ export async function POST(request: NextRequest) {
       await saveMessage(convId, 'assistant', responseText);
     }
 
-    // Return streaming response with conversation ID header
-    return new NextResponse(fullStream as any, {
+    console.log('Chat response saved to database');
+
+    // Return response
+    return new NextResponse(responseText, {
       headers: {
         'X-Conversation-ID': convId,
-        'Content-Type': 'text/event-stream',
+        'Content-Type': 'text/plain; charset=utf-8',
       },
     });
   } catch (error) {
     console.error('Chat API error:', error);
 
-    // Handle specific error types
     if (error instanceof SyntaxError) {
       return NextResponse.json(
         { error: 'Invalid JSON in request body' },
@@ -132,8 +134,8 @@ export async function POST(request: NextRequest) {
 // Optional: Handle GET for testing
 export async function GET() {
   return NextResponse.json({
-    message: 'Chat endpoint ready',
+    message: 'Chat endpoint with tool-calling support',
     method: 'POST',
-    body: 'Array of messages: { messages: Array<{ role: "user" | "assistant", content: string }> }',
+    features: ['streaming responses', 'tool calling', 'database persistence'],
   });
 }

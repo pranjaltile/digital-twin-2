@@ -9,7 +9,7 @@ import { sql } from '@vercel/postgres';
 let defaultProjectId: string | null = null;
 
 async function getDefaultProject(): Promise<string> {
-  if (defaultProjectId) return defaultProjectId;
+  if (defaultProjectId !== null) return defaultProjectId;
 
   try {
     // Try to get existing project
@@ -18,7 +18,7 @@ async function getDefaultProject(): Promise<string> {
     `;
 
     if (existing.rows.length > 0) {
-      defaultProjectId = existing.rows[0].id;
+      defaultProjectId = existing.rows[0].id as string;
       return defaultProjectId;
     }
 
@@ -29,7 +29,7 @@ async function getDefaultProject(): Promise<string> {
       RETURNING id;
     `;
 
-    defaultProjectId = created.rows[0].id;
+    defaultProjectId = created.rows[0].id as string;
     return defaultProjectId;
   } catch (error) {
     console.error('Error getting default project:', error);
@@ -127,7 +127,7 @@ export async function getConversationHistory(
       ORDER BY created_at ASC;
     `;
 
-    return result.rows;
+    return result.rows as Array<{ id: string; role: string; content: string; createdAt: string }>;
   } catch (error) {
     console.error('Error fetching conversation history:', error);
     throw error;

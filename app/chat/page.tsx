@@ -3,6 +3,7 @@
  * Main conversational interface for the Digital Twin
  * 
  * Milestone 4: Lead Capture - Visitor form and booking
+ * Milestone 5: Personalized suggested prompts for Pranjal
  */
 
 'use client';
@@ -15,8 +16,19 @@ import { ScrollArea } from '@/components/ui/scroll-area';
 import { ChatMessage } from '@/components/ChatMessage';
 import { VisitorCaptureForm } from '@/components/VisitorCaptureForm';
 import { BookingScheduler } from '@/components/BookingScheduler';
+import { SuggestedPrompts } from '@/components/SuggestedPrompts';
 import Link from 'next/link';
 import { Loader2, Send, Home, Copy, Check } from 'lucide-react';
+
+// Suggested prompts tailored to Pranjal's expertise
+const SUGGESTED_PROMPTS = [
+  'What AI and web technologies do you specialize in?',
+  'Tell me about your NLP-Chatbot project',
+  'What was your SUNHACK 2024 experience like?',
+  'Are you open to freelance or full-time opportunities?',
+  'How do you approach design thinking in development?',
+  'What HealthTech projects interest you?',
+];
 
 export default function ChatPage() {
   const [conversationId, setConversationId] = useState<string | null>(null);
@@ -24,6 +36,7 @@ export default function ChatPage() {
   const [copied, setCopied] = useState(false);
   const [visitorEmail, setVisitorEmail] = useState<string>('');
   const [showLeadCapture, setShowLeadCapture] = useState(false);
+  const [suggestedPrompts, setSuggestedPrompts] = useState<string[]>(SUGGESTED_PROMPTS);
   const { messages, input, handleInputChange, handleSubmit, isLoading, error } = useChat({
     api: '/api/chat',
     body: {
@@ -131,51 +144,20 @@ export default function ChatPage() {
             <div className="flex h-full items-center justify-center text-center">
               <div className="space-y-4">
                 <div className="text-4xl">👋</div>
-                <h2 className="text-2xl font-bold text-white">Welcome to Digital Twin</h2>
+                <h2 className="text-2xl font-bold text-white">Welcome to Pranjal's Digital Twin</h2>
                 <p className="max-w-sm text-slate-400">
-                  Ask me about my skills, experience, availability, or any questions you have.
-                  Your conversation will be saved automatically.
+                  Chat with an AI representation of a Full-Stack Developer & AI/ML specialist. 
+                  Ask about expertise, projects, or collaboration opportunities. Your conversation is saved automatically.
                 </p>
-                <div className="space-y-2 pt-4">
-                  <p className="text-xs text-slate-500">Try asking:</p>
-                  <div className="flex flex-col gap-2">
-                    <button
-                      onClick={() =>
-                        handleInputChange({
-                          target: {
-                            value: 'What technologies do you specialize in?',
-                          },
-                        } as any)
-                      }
-                      className="text-left text-xs text-blue-400 hover:text-blue-300"
-                    >
-                      → What technologies do you specialize in?
-                    </button>
-                    <button
-                      onClick={() =>
-                        handleInputChange({
-                          target: {
-                            value: 'Tell me about your recent projects',
-                          },
-                        } as any)
-                      }
-                      className="text-left text-xs text-blue-400 hover:text-blue-300"
-                    >
-                      → Tell me about your recent projects
-                    </button>
-                    <button
-                      onClick={() =>
-                        handleInputChange({
-                          target: {
-                            value: 'Are you open to remote work?',
-                          },
-                        } as any)
-                      }
-                      className="text-left text-xs text-blue-400 hover:text-blue-300"
-                    >
-                      → Are you open to remote work?
-                    </button>
-                  </div>
+                <div className="space-y-3 pt-4">
+                  <SuggestedPrompts
+                    prompts={suggestedPrompts.slice(0, 3)}
+                    onPromptClick={(prompt) => {
+                      handleInputChange({
+                        target: { value: prompt },
+                      } as any);
+                    }}
+                  />
                 </div>
                 {conversationId && (
                   <p className="text-xs text-slate-500 pt-4">
