@@ -9,13 +9,13 @@ An AI-powered professional presence that represents you 24/7. Visitors can engag
 
 ## ✨ Features
 
-- **💬 Real-time Chat** — Stream AI responses with natural conversation flow
-- **🎤 Voice Mode** — Talk directly using speech recognition & text-to-speech
-- **🧠 Context-Aware** — Maintains conversation history for coherent discussions
-- **📝 Lead Capture** — Automatically collect visitor contact information
-- **📅 Booking System** — Schedule meetings directly through chat
-- **📊 Admin Dashboard** — Monitor visitors, conversations, and bookings
-- **🌙 Dark Mode** — Beautiful, modern dark UI
+- **Real-time Chat** — Stream AI responses with natural conversation flow
+- **Voice Mode** — Talk directly using speech recognition & text-to-speech
+- **Context-Aware** — Maintains conversation history for coherent discussions
+- **Lead Capture** — Automatically collect visitor contact information
+- **Booking System** — Schedule meetings directly through chat
+- **Admin Dashboard** — Monitor visitors, conversations, and bookings
+- **Dark Mode** — Beautiful, modern dark UI
 
 ## 🚀 Quick Start
 
