@@ -170,15 +170,15 @@ Set these in your Vercel project settings:
 
 | # | Milestone | Status |
 |---|-----------|--------|
-| 1 | Foundation | ✅ Complete |
-| 2 | Chat Interface | ✅ Complete |
-| 3 | Database Persistence | ✅ Complete |
-| 4 | Lead Capture | ✅ Complete |
-| 5 | Personality Enhancement | ✅ Complete |
-| 6 | Tool Calling | ✅ Complete |
-| 7 | Deployment | ✅ Complete |
-| 8 | Voice Agent | ✅ Complete |
-| 9 | Polish & Launch | ✅ Complete |
+| 1 | Foundation |  Complete |
+| 2 | Chat Interface |  Complete |
+| 3 | Database Persistence |  Complete |
+| 4 | Lead Capture |  Complete |
+| 5 | Personality Enhancement |  Complete |
+| 6 | Tool Calling |  Complete |
+| 7 | Deployment |  Complete |
+| 8 | Voice Agent |  Complete |
+| 9 | Polish & Launch |  Complete |
 
 ## 🤝 Contributing
 
@@ -194,7 +194,7 @@ Contributions are welcome! Please read our contributing guidelines first.
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-## 🙏 Acknowledgments
+##  Acknowledgments
 
 - [Vercel](https://vercel.com) for hosting
 - [Groq](https://groq.com) for fast AI inference
