@@ -148,15 +148,44 @@ export default function ChatPage() {
 
     const utterance = new SpeechSynthesisUtterance(text);
     utterance.rate = 1.0;
-    utterance.pitch = 1.0;
+    utterance.pitch = 1.2; // Slightly higher pitch for female voice
     utterance.volume = 1.0;
-    utterance.lang = 'en-US';
+    utterance.lang = 'en-IN';
 
     const voices = window.speechSynthesis.getVoices();
-    const preferredVoice = voices.find(v => 
-      v.name.includes('Google') || v.name.includes('Natural') || v.name.includes('Samantha')
-    ) || voices.find(v => v.lang.startsWith('en'));
     
+    // Priority 1: Female English (India) voice
+    let preferredVoice = voices.find(v => 
+      v.lang.toLowerCase() === 'en-in' && 
+      (v.name.toLowerCase().includes('female') || 
+       v.name.toLowerCase().includes('woman') ||
+       v.name.toLowerCase().includes('her') ||
+       v.name.toLowerCase().includes('isha') ||
+       v.name.toLowerCase().includes('mohini') ||
+       v.name.toLowerCase().includes('shruti'))
+    );
+
+    // Priority 2: Any female English voice
+    if (!preferredVoice) {
+      preferredVoice = voices.find(v => 
+        v.lang.startsWith('en') && 
+        (v.name.toLowerCase().includes('female') || 
+         v.name.toLowerCase().includes('woman') ||
+         v.name.toLowerCase().includes('her') ||
+         v.name.toLowerCase().includes('google'))
+      );
+    }
+
+    // Priority 3: Any English (India) voice
+    if (!preferredVoice) {
+      preferredVoice = voices.find(v => v.lang.toLowerCase() === 'en-in');
+    }
+
+    // Priority 4: Fallback to any English voice
+    if (!preferredVoice) {
+      preferredVoice = voices.find(v => v.lang.startsWith('en'));
+    }
+
     if (preferredVoice) utterance.voice = preferredVoice;
 
     utterance.onstart = () => setIsSpeaking(true);
@@ -221,7 +250,7 @@ export default function ChatPage() {
     const recognition = new SpeechRecognitionAPI();
     recognition.continuous = false; // Stop after each phrase
     recognition.interimResults = true;
-    recognition.lang = 'en-US';
+    recognition.lang = 'en-IN';
 
     recognition.onstart = () => {
       setIsListening(true);

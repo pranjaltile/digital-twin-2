@@ -662,12 +662,12 @@ const voiceTranscriptRef = useRef<string>('');
 // Speech Recognition setup
 recognition.continuous = false;  // Stop after phrase
 recognition.interimResults = true;  // Show partial results
-recognition.lang = 'en-US';
+recognition.lang = 'en-IN';
 
 // TTS Configuration
 utterance.rate = 1.0;
 utterance.pitch = 1.0;
-utterance.lang = 'en-US';
+utterance.lang = 'en-IN';
 // Prefer natural-sounding voices
 preferredVoice = voices.find(v => 
   v.name.includes('Google') || 
